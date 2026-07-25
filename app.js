@@ -183,7 +183,7 @@ function showCard(data, success) {
 // ===========================
 
 async function onScanSuccess(qrText) {
-
+    alert(qrText);
     if (!scanning) return;
 
     // 같은 QR 연속 인식 방지
@@ -199,12 +199,11 @@ async function onScanSuccess(qrText) {
     try {
 
         const response = await fetch(API_URL, {
+            method: "POST",
+            redirect: "follow",
 
             method: "POST",
 
-            headers: {
-                "Content-Type": "application/json"
-            },
 
             body: JSON.stringify({
 
