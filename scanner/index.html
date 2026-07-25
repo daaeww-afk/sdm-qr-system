@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>환우 QR 체크인</title>
+
+<link rel="stylesheet" href="scanner.css">
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+</head>
+
+<body>
+
+<div class="scanner-page">
+
+  <div class="scanner-card">
+
+    <div class="header">
+
+      <div class="logo">🩺</div>
+
+      <h1>환우 QR 체크인</h1>
+
+      <p>서대문교회</p>
+
+    </div>
+
+    <div class="camera-box">
+      <div id="reader"></div>
+    </div>
+
+    <div
+      id="status"
+      class="status waiting">
+
+      📷 카메라를 준비하고 있습니다...
+
+    </div>
+
+    <div class="today-card">
+
+      <div class="today-title">
+
+        오늘 체크인
+
+      </div>
+
+      <div class="today-number">
+
+        <span id="todayCount">0</span>
+
+        <small>명</small>
+
+      </div>
+
+    </div>
+
+    <div
+      id="lastResult"
+      class="last-result">
+
+      아직 인증 내역이 없습니다.
+
+    </div>
+
+  </div>
+
+</div>
+
+<div
+  id="successOverlay"
+  class="overlay success">
+
+  <div class="overlay-card">
+
+    <div class="icon">✅</div>
+
+    <h2>인증 완료</h2>
+
+    <h3 id="successName"></h3>
+
+    <p id="successDept"></p>
+
+  </div>
+
+</div>
+
+<div
+  id="errorOverlay"
+  class="overlay error">
+
+  <div class="overlay-card">
+
+    <div class="icon">❌</div>
+
+    <h2>인증 실패</h2>
+
+    <p id="errorMessage"></p>
+
+  </div>
+
+</div>
+
+<script src="../shared/api.js"></script>
+<script src="scanner.js"></script>
+
+</body>
+
+</html>
