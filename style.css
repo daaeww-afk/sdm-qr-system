@@ -1,0 +1,45 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Pretendard", Arial, sans-serif;
+    background: #f4f6f9;
+}
+
+.container {
+    max-width: 600px;
+    margin: 40px auto;
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+}
+
+h1 {
+    text-align: center;
+    color: #1565c0;
+    margin-bottom: 10px;
+}
+
+p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+}
+
+#reader {
+    width: 100%;
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+#result{
+    margin-top:20px;
+    padding:20px;
+    border-radius:12px;
+    background:#e8f5e9;
+    display:none;
+}
