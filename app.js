@@ -183,7 +183,7 @@ function showCard(data, success) {
 // ===========================
 
 async function onScanSuccess(qrText) {
-    alert(qrText);
+    
     if (!scanning) return;
 
     // 같은 QR 연속 인식 방지
