@@ -240,6 +240,12 @@ async function onScanSuccess(qrText) {
     } catch (err) {
 
         console.error(err);
+        
+        alert(
+            "오류 이름 : " + err.name +
+            "\n\n메시지 : " + err.message +
+            "\n\n전체 : " + JSON.stringify(err)
+        );
 
         setStatus("error", "❌ 서버 연결 실패");
 
@@ -343,13 +349,19 @@ async function startCamera() {
 
         );
 
-    } catch (err) {
+} catch (err) {
 
-        console.error(err);
+    console.error("Camera Error:", err);
 
-        setStatus("error", "❌ 카메라 실행 실패");
+    alert(
+        err.name + "\n\n" +
+        err.message + "\n\n" +
+        JSON.stringify(err)
+    );
 
-    }
+    setStatus("error", "❌ 카메라 실행 실패");
+
+}
 
 }
 
