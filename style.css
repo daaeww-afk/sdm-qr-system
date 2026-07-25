@@ -1,45 +1,645 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* ==========================================================
+   SDM QR CHECK-IN SYSTEM
+   style.css V3 (1/3)
+========================================================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    font-family: "Pretendard", Arial, sans-serif;
-    background: #f4f6f9;
+html,body{
+
+    width:100%;
+    height:100%;
+    overflow:hidden;
+
+    font-family:
+    "Pretendard",
+    "Noto Sans KR",
+    sans-serif;
+
+    background:#eef3f8;
+
+    color:#222;
+
 }
 
-.container {
-    max-width: 600px;
-    margin: 40px auto;
-    background: white;
-    border-radius: 16px;
-    padding: 30px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.1);
+body{
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
 }
 
-h1 {
-    text-align: center;
-    color: #1565c0;
-    margin-bottom: 10px;
-}
+/* ===========================
+   Layout
+=========================== */
 
-p {
-    text-align: center;
-    color: #666;
-    margin-bottom: 20px;
-}
+.container{
 
-#reader {
-    width: 100%;
-    border-radius: 12px;
-    overflow: hidden;
-}
+    width:100%;
+    max-width:460px;
 
-#result{
-    margin-top:20px;
+    height:100vh;
+
+    display:flex;
+    flex-direction:column;
+
     padding:20px;
-    border-radius:12px;
-    background:#e8f5e9;
-    display:none;
+
 }
+
+/* ===========================
+   Header
+=========================== */
+
+.header{
+
+    text-align:center;
+
+    margin-bottom:18px;
+
+}
+
+.header h1{
+
+    font-size:30px;
+
+    font-weight:800;
+
+    color:#183153;
+
+}
+
+.header p{
+
+    margin-top:6px;
+
+    color:#666;
+
+    font-size:15px;
+
+}
+
+/* ===========================
+   Status
+=========================== */
+
+.status{
+
+    margin:12px auto;
+
+    width:220px;
+
+    text-align:center;
+
+    border-radius:30px;
+
+    padding:10px;
+
+    font-weight:700;
+
+    font-size:15px;
+
+    transition:.3s;
+
+}
+
+.status.waiting{
+
+    background:#EAF7EE;
+
+    color:#18A558;
+
+}
+
+.status.processing{
+
+    background:#FFF8DD;
+
+    color:#C28A00;
+
+}
+
+.status.success{
+
+    background:#DCFCE7;
+
+    color:#15803D;
+
+}
+
+.status.error{
+
+    background:#FEE2E2;
+
+    color:#DC2626;
+
+}
+
+/* ===========================
+   QR Reader
+=========================== */
+
+#reader{
+
+    width:100%;
+
+    border-radius:22px;
+
+    overflow:hidden;
+
+    background:#fff;
+
+    box-shadow:
+
+        0 12px 30px rgba(0,0,0,.08);
+
+    border:3px solid #fff;
+
+}
+
+#reader video{
+
+    border-radius:18px;
+
+}
+
+/* html5-qrcode 버튼 숨김 */
+
+#reader button{
+
+    display:none !important;
+
+}
+
+#reader__dashboard{
+
+    display:none !important;
+
+}
+
+#reader__status_span{
+
+    display:none !important;
+
+}
+/* ===========================
+   Result Card
+=========================== */
+
+.result-card{
+
+    margin-top:18px;
+
+    background:#fff;
+
+    border-radius:24px;
+
+    padding:22px;
+
+    box-shadow:
+
+        0 12px 35px rgba(0,0,0,.08);
+
+    transition:.25s;
+
+}
+
+.result-card.hidden{
+
+    display:none;
+
+}
+
+.result-card.success{
+
+    border:3px solid #22C55E;
+
+    animation:pop .28s ease;
+
+}
+
+.result-card.error{
+
+    border:3px solid #EF4444;
+
+    animation:shake .30s;
+
+}
+
+#resultIcon{
+
+    font-size:60px;
+
+    text-align:center;
+
+    margin-bottom:10px;
+
+}
+
+#resultTitle{
+
+    text-align:center;
+
+    font-size:28px;
+
+    font-weight:800;
+
+    margin-bottom:10px;
+
+}
+
+#memberName{
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:700;
+
+    margin-bottom:18px;
+
+}
+
+#blessing{
+
+    text-align:center;
+
+    color:#16A34A;
+
+    font-size:17px;
+
+    font-weight:700;
+
+    margin-bottom:18px;
+
+}
+
+/* ===========================
+   Info Box
+=========================== */
+
+.info-box{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:10px;
+
+}
+
+.info-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 14px;
+
+    border-radius:14px;
+
+    background:#F8FAFC;
+
+}
+
+.info-label{
+
+    color:#64748B;
+
+    font-size:15px;
+
+}
+
+.info-value{
+
+    font-size:16px;
+
+    font-weight:700;
+
+    color:#1E293B;
+
+}
+
+/* ===========================
+   Success / Error Color
+=========================== */
+
+.result-card.success #resultTitle{
+
+    color:#16A34A;
+
+}
+
+.result-card.error #resultTitle{
+
+    color:#DC2626;
+
+}
+
+.result-card.error #blessing{
+
+    color:#DC2626;
+
+}
+
+/* ===========================
+   Animation
+=========================== */
+
+@keyframes pop{
+
+    0%{
+
+        transform:scale(.92);
+
+        opacity:0;
+
+    }
+
+    100%{
+
+        transform:scale(1);
+
+        opacity:1;
+
+    }
+
+}
+
+@keyframes shake{
+
+    0%{
+
+        transform:translateX(0);
+
+    }
+
+    25%{
+
+        transform:translateX(-8px);
+
+    }
+
+    50%{
+
+        transform:translateX(8px);
+
+    }
+
+    75%{
+
+        transform:translateX(-5px);
+
+    }
+
+    100%{
+
+        transform:translateX(0);
+
+    }
+
+}
+/* ===========================
+   Footer
+=========================== */
+
+.footer{
+
+    margin-top:auto;
+
+    padding:18px 0;
+
+    text-align:center;
+
+    color:#94A3B8;
+
+    font-size:13px;
+
+}
+
+/* ===========================
+   Loading
+=========================== */
+
+.loading{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:10px;
+
+    margin-top:18px;
+
+}
+
+.spinner{
+
+    width:22px;
+
+    height:22px;
+
+    border:3px solid #E2E8F0;
+
+    border-top:3px solid #2563EB;
+
+    border-radius:50%;
+
+    animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+    from{
+
+        transform:rotate(0deg);
+
+    }
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+/* ===========================
+   Reader Frame
+=========================== */
+
+#reader{
+
+    position:relative;
+
+}
+
+#reader::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:18px;
+
+    border:4px solid rgba(37,99,235,.85);
+
+    border-radius:20px;
+
+    pointer-events:none;
+
+    animation:scanBorder 2s infinite;
+
+}
+
+@keyframes scanBorder{
+
+    0%{
+
+        border-color:#2563EB;
+
+        box-shadow:0 0 0 rgba(37,99,235,.1);
+
+    }
+
+    50%{
+
+        border-color:#22C55E;
+
+        box-shadow:0 0 18px rgba(34,197,94,.45);
+
+    }
+
+    100%{
+
+        border-color:#2563EB;
+
+        box-shadow:0 0 0 rgba(37,99,235,.1);
+
+    }
+
+}
+
+/* ===========================
+   Mobile
+=========================== */
+
+@media (max-width:480px){
+
+    .container{
+
+        padding:14px;
+
+    }
+
+    .header h1{
+
+        font-size:24px;
+
+    }
+
+    .header p{
+
+        font-size:14px;
+
+    }
+
+    #resultTitle{
+
+        font-size:24px;
+
+    }
+
+    #memberName{
+
+        font-size:19px;
+
+    }
+
+    .info-row{
+
+        padding:10px 12px;
+
+    }
+
+}
+
+/* ===========================
+   Dark Mode
+=========================== */
+
+@media (prefers-color-scheme:dark){
+
+    body{
+
+        background:#111827;
+
+        color:#F9FAFB;
+
+    }
+
+    .header h1{
+
+        color:#FFFFFF;
+
+    }
+
+    .header p{
+
+        color:#CBD5E1;
+
+    }
+
+    .result-card{
+
+        background:#1F2937;
+
+        color:#F9FAFB;
+
+    }
+
+    .info-row{
+
+        background:#374151;
+
+    }
+
+    .info-label{
+
+        color:#CBD5E1;
+
+    }
+
+    .info-value{
+
+        color:#FFFFFF;
+
+    }
+
+    #reader{
+
+        border-color:#374151;
+
+    }
+
+}
+
+/* ===========================
+   Version
+=========================== */
+
+/*
+SDM QR CHECK-IN SYSTEM
+STYLE V3.0
+Designed by ChatGPT
+*/

@@ -1,16 +1,196 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,initial-scale=1.0,maximum-scale=1,user-scalable=no">
+
+<title>서대문교회 QR 체크인</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://unpkg.com/html5-qrcode"></script>
+
+</head>
+
+<body>
+
 <div class="container">
 
-    <h1>🏥 환우 QR 체크인</h1>
+    <!-- Header -->
 
-    <p>QR을 카메라에 비춰주세요.</p>
+    <div class="header">
+
+        <h1>환우석 QR 체크인</h1>
+
+        <p>
+            QR을 카메라에 비춰 주세요.
+        </p>
+
+    </div>
+
+    <!-- Status -->
+
+    <div
+        id="statusBadge"
+        class="status waiting">
+
+        🟢 인증 대기 중
+
+    </div>
+
+    <!-- QR -->
 
     <div id="reader"></div>
 
-    <div id="result"></div>
+    <!-- Result -->
 
-  </div>
+    <div
+        id="resultCard"
+        class="result-card hidden">
 
-  <script src="app.js"></script>
+        <div
+            id="resultIcon">
+
+            ✅
+
+        </div>
+
+        <div
+            id="resultTitle">
+
+            인증 완료
+
+        </div>
+
+        <div
+            id="memberName">
+
+            -
+
+        </div>
+
+        <div
+            id="blessing">
+
+            은혜 많이 받는 예배 되세요.
+
+        </div>
+
+        <div
+            id="infoBox"
+            class="info-box">
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    오늘 이용
+                </span>
+
+                <span
+                    id="todayCount"
+                    class="info-value">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    소속
+                </span>
+
+                <span
+                    id="department"
+                    class="info-value">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    인증 시작
+                </span>
+
+                <span
+                    id="startDate"
+                    class="info-value">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    인증 종료
+                </span>
+
+                <span
+                    id="endDate"
+                    class="info-value">
+
+                    -
+
+                </span>
+
+            </div>
+
+            <div class="info-row">
+
+                <span class="info-label">
+                    체크인 시간
+                </span>
+
+                <span
+                    id="checkTime"
+                    class="info-value">
+
+                    -
+
+                </span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer">
+
+        서대문교회 내무부<br>
+
+        QR Check-In System
+
+    </div>
+
+</div>
+
+<!-- Apps Script URL -->
+
+<input
+    type="hidden"
+    id="apiUrl"
+    value="https://script.google.com/macros/s/AKfycbyMaEjQNZvCK_OYpB6h4Wc9CxnqIjivTOuwD8zhcT7thyYUlZJt3dMZD7m-ZrDf5GtM/exec">
+
+<script src="app.js"></script>
 
 </body>
 
