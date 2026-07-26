@@ -59,16 +59,18 @@ async function initScanner() {
             "QR을 카메라에 비춰주세요."
         );
 
-    } catch (err) {
+} catch(err){
 
-        console.error(err);
+    console.error(err);
 
-        setStatus(
-            "error",
-            "카메라 실행 실패"
-        );
+    alert(err);
 
-    }
+    setStatus(
+        "error",
+        "카메라 실행 실패"
+    );
+
+}
 
 }
 
