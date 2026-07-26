@@ -24,51 +24,34 @@ async function initScanner() {
 
     try {
 
-        const cameras =
-            await Html5Qrcode.getCameras();
+        const cameras = await Html5Qrcode.getCameras();
 
         if (!cameras.length) {
-
-            setStatus(
-                "error",
-                "카메라를 찾을 수 없습니다."
-            );
-
+            setStatus("error", "카메라를 찾을 수 없습니다.");
             return;
-
         }
 
         let cameraId = cameras[0].id;
 
-        const backCamera =
-            cameras.find(c =>
-                c.label.toLowerCase().includes("back") ||
-                c.label.includes("후면")
-            );
+        const backCamera = cameras.find(c =>
+            c.label.toLowerCase().includes("back") ||
+            c.label.includes("후면")
+        );
 
         if (backCamera) {
-
             cameraId = backCamera.id;
-
         }
 
         await html5QrCode.start(
-
             cameraId,
-
             {
-
-                fps:10,
-
-                qrbox:{
-                    width:260,
-                    height:260
+                fps: 10,
+                qrbox: {
+                    width: 260,
+                    height: 260
                 }
-
             },
-
             onScanSuccess
-
         );
 
         setStatus(
@@ -76,7 +59,7 @@ async function initScanner() {
             "QR을 카메라에 비춰주세요."
         );
 
-    } catch(err){
+    } catch (err) {
 
         console.error(err);
 
@@ -92,9 +75,9 @@ async function initScanner() {
 /**
  * QR 인식
  */
-async function onScanSuccess(decodedText){
+async function onScanSuccess(decodedText) {
 
-    if(processing) return;
+    if (processing) return;
 
     processing = true;
 
@@ -105,101 +88,71 @@ async function onScanSuccess(decodedText){
         "🔍 인증 확인 중..."
     );
 
-    try{
+    try {
 
-        const response =
-            await fetch(API_URL,{
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                action: "checkIn",
+                qrId: decodedText
+            })
+        });
 
-                method:"POST",
+        console.log("========== API RESPONSE ==========");
+        console.log("Status:", response.status);
+        console.log("URL:", response.url);
 
-                headers:{
-                    "Content-Type":"application/json"
-                },
+        const text = await response.text();
 
-                body:JSON.stringify({
+        console.log("Response:", text);
 
-                    action:"checkIn",
+        alert(
+            "Status : " + response.status +
+            "\n\n" +
+            text
+        );
 
-                    qrId:decodedText
-
-                })
-
-            });
-
-        const result =
-            await response.json();
-        if(result.success){
-
-            playSuccess(result);
-
-            setStatus(
-                "success",
-                "✅ " + result.name + "님 인증 완료"
-            );
-
-            document.getElementById("lastResult").innerHTML =
-                "<b>" + result.name + "</b><br>" +
-                result.department;
-
-            document.getElementById("todayCount").innerHTML =
-                result.todayCount;
-
-        }else{
-
-            playError(result.message);
-
-            setStatus(
-                "error",
-                "❌ " + result.message
-            );
-
-        }
-
-    }catch(err){
+    } catch (err) {
 
         console.error(err);
 
-        playError("서버 오류");
+        alert(err.toString());
 
     }
 
-    setTimeout(async ()=>{
+    processing = false;
 
-        hideOverlay();
+    hideOverlay();
 
-        processing = false;
+    await html5QrCode.resume();
 
-        await html5QrCode.resume();
-
-        setStatus(
-            "waiting",
-            "QR을 카메라에 비춰주세요."
-        );
-
-    },2000);
+    setStatus(
+        "waiting",
+        "QR을 카메라에 비춰주세요."
+    );
 
 }
 
 /**
  * 상태 표시
  */
-function setStatus(type,message){
+function setStatus(type, message) {
 
-    const status =
-        document.getElementById("status");
+    const status = document.getElementById("status");
 
-    status.className =
-        "status " + type;
+    status.className = "status " + type;
 
-    status.innerHTML =
-        message;
+    status.innerHTML = message;
 
 }
 
 /**
  * 성공
  */
-function playSuccess(result){
+function playSuccess(result) {
 
     beep();
 
@@ -220,7 +173,7 @@ function playSuccess(result){
 /**
  * 실패
  */
-function playError(message){
+function playError(message) {
 
     beep();
 
@@ -236,7 +189,7 @@ function playError(message){
 /**
  * 오버레이 숨김
  */
-function hideOverlay(){
+function hideOverlay() {
 
     document
         .getElementById("successOverlay")
@@ -251,9 +204,9 @@ function hideOverlay(){
 /**
  * 효과음
  */
-function beep(){
+function beep() {
 
-    try{
+    try {
 
         const audio = new Audio(
             "https://actions.google.com/sounds/v1/cartoon/pop.ogg"
@@ -261,19 +214,17 @@ function beep(){
 
         audio.play();
 
-    }catch(e){}
+    } catch (e) {}
 
 }
 
 /**
  * 진동
  */
-function vibrate(){
+function vibrate() {
 
-    if(navigator.vibrate){
-
+    if (navigator.vibrate) {
         navigator.vibrate(200);
-
     }
 
 }
