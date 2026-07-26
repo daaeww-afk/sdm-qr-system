@@ -1,4 +1,4 @@
-const API_URL = "https://script.google.com/macros/s/AKfycbyMaEjQNZvCK_OYpB6h4Wc9CxnqIjivTOuwD8zhcT7thyYUlZJt3dMZD7m-ZrDf5GtM/exec";
+const API_URL = "https://tight-feather-2125.daaeww.workers.dev";
 
 let html5QrCode = null;
 let scanning = false;
@@ -92,16 +92,17 @@ async function onScanSuccess(decodedText) {
 
     try {
 
-        const response = await fetch(API_URL, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                action: "checkIn",
-                qrId: decodedText
-            })
-        });
+const response = await fetch(API_URL, {
+    method: "POST",
+    headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+    },
+    body: JSON.stringify({
+        action: "checkIn",
+        qrId: decodedText
+    }),
+    redirect: "follow"
+});
 
         console.log("========== API RESPONSE ==========");
         console.log("Status:", response.status);
