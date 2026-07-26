@@ -4,7 +4,13 @@ let html5QrCode = null;
 let scanning = false;
 let processing = false;
 
-window.onload = initScanner;
+window.onload = async () => {
+
+    await loadTodayCount();
+
+    initScanner();
+
+};
 
 /**
  * 스캐너 시작
@@ -279,6 +285,40 @@ function vibrate() {
 
     if (navigator.vibrate) {
         navigator.vibrate(200);
+    }
+
+}
+/**
+ * 오늘 체크인 수 불러오기
+ */
+async function loadTodayCount() {
+
+    try {
+
+        const response = await fetch(API_URL, {
+            method: "POST",
+            headers: {
+                "Content-Type": "text/plain;charset=utf-8"
+            },
+            body: JSON.stringify({
+                action: "getTodayCount"
+            }),
+            redirect: "follow"
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+
+            document.getElementById("todayCount").innerText =
+                result.todayCount;
+
+        }
+
+    } catch (err) {
+
+        console.error("오늘 체크인 수 조회 실패", err);
+
     }
 
 }
