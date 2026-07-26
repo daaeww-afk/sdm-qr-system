@@ -108,15 +108,29 @@ const response = await fetch(API_URL, {
         console.log("Status:", response.status);
         console.log("URL:", response.url);
 
-        const text = await response.text();
+const result = await response.json();
 
-        console.log("Response:", text);
+alert(JSON.stringify(result, null, 2)); 
 
-        alert(
-            "Status : " + response.status +
-            "\n\n" +
-            text
-        );
+console.log(result);
+
+if (result.success) {
+
+    playSuccess(result);
+
+    document.getElementById("todayCount").innerText =
+        result.todayCount;
+
+    setStatus(
+        "success",
+        "✅ 체크인 완료"
+    );
+
+} else {
+
+    playError(result.message);
+
+}
 
     } catch (err) {
 
@@ -125,17 +139,6 @@ const response = await fetch(API_URL, {
         alert(err.toString());
 
     }
-
-    processing = false;
-
-    hideOverlay();
-
-    await html5QrCode.resume();
-
-    setStatus(
-        "waiting",
-        "QR을 카메라에 비춰주세요."
-    );
 
 }
 
@@ -158,7 +161,6 @@ function setStatus(type, message) {
 function playSuccess(result) {
 
     beep();
-
     vibrate();
 
     document.getElementById("successName").innerHTML =
@@ -167,9 +169,35 @@ function playSuccess(result) {
     document.getElementById("successDept").innerHTML =
         result.department;
 
+    document.getElementById("todayCount").innerText =
+        result.todayCount ?? 0;
+
+    document.getElementById("lastResult").innerHTML =
+        `✅ ${result.name} (${result.department})<br>${result.checkinTime}`;
+
     document
         .getElementById("successOverlay")
         .classList.add("show");
+
+    setStatus(
+        "success",
+        "✅ 체크인 완료"
+    );
+
+    setTimeout(async () => {
+
+        hideOverlay();
+
+        processing = false;
+
+        await html5QrCode.resume();
+
+        setStatus(
+            "waiting",
+            "QR을 카메라에 비춰주세요."
+        );
+
+    }, 2000);
 
 }
 
@@ -183,9 +211,32 @@ function playError(message) {
     document.getElementById("errorMessage").innerHTML =
         message;
 
+    document.getElementById("lastResult").innerHTML =
+        "❌ " + message;
+
     document
         .getElementById("errorOverlay")
         .classList.add("show");
+
+    setStatus(
+        "error",
+        message
+    );
+
+    setTimeout(async ()=>{
+
+        hideOverlay();
+
+        processing = false;
+
+        await html5QrCode.resume();
+
+        setStatus(
+            "waiting",
+            "QR을 카메라에 비춰주세요."
+        );
+
+    },2000);
 
 }
 
